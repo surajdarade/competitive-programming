@@ -26,21 +26,22 @@ using namespace std;
 
 int main() {
     
-    int n, x = 0;
-    cin >> n;
+    long long int testCaseCount;
+    string inputNumber;
+    cin >> inputNumber;
  
-    for (int i = 0; i < n; ++i) {
-        string statement;
-        cin >> statement;
-        
-        if (statement.find("++") != string::npos) {
-            ++x;
-        } else {
-            --x;
+    for (int index = 0; index < inputNumber.length(); index++) {
+        if (inputNumber[index] > '4') {
+            inputNumber[index] = '9' - inputNumber[index] + '0';
         }
     }
  
-    cout << x << endl;
+    if (inputNumber[0] == '0') {
+        inputNumber[0] = '9';
+    }
+ 
+    cout << inputNumber;
+ 
     return 0;
 
 }
