@@ -1,10 +1,12 @@
 #include <bits/stdc++.h>
 #include <string.h>
 #define ll long long int
-#define cint int t; cin >> t;
+#define cint \
+    int t;   \
+    cin >> t;
 #define br << endl;
-#define no "NO"
-#define yes "YES"
+#define no cout << "NO" << endl;
+#define yes cout << "YES" << endl;
 #define vecint vector<int>
 #define vecll vector<long long int>
 #define vecstring vector<string>
@@ -25,9 +27,34 @@
 using namespace std;
 
 int main() {
-    
-    
-
-    return 0;
-
+   vector<int> nums(4);
+   for(int i = 0; i < 4; i++) {
+       cin >> nums[i];
+   }
+   
+   sort(nums.begin(), nums.end());
+   
+   for(int i = 0; i < 4; i++) {
+       for(int j = i + 1; j < 4; j++) {
+           for(int k = j + 1; k < 4; k++) {
+               long long s1 = nums[i];
+               long long s2 = nums[j];
+               long long s3 = nums[k];
+               long long total = nums[6 - i - j - k];
+               
+               long long a = (s1 + s3 - s2) / 2;
+               long long b = (s1 + s2 - s3) / 2;
+               long long c = (s2 + s3 - s1) / 2;
+               
+               if (a > 0 && b > 0 && c > 0 && 
+                   a + b == s1 && b + c == s2 && a + c == s3 && 
+                   a + b + c == total) {
+                   cout << a << " " << b << " " << c << endl;
+                   return 0;
+               }
+           }
+       }
+   }
+   
+   return 0;
 }
