@@ -26,12 +26,13 @@ int main() {
     cint
 
     while (t--) {
-        int x, y, k; 
-        cin >> x >> y >> k;
-        int cood = min(x, y);
-        cout << "0 " << cood << " " << cood << " 0" << endl;
-        cout  << "0 0 " << cood << " " << cood << endl;
+        int abc, def, ghi; 
+        cin >> abc >> def >> ghi;
 
+        int ansMinCordPerSeg = min(abc, def);
+
+        cout << "0 " << ansMinCordPerSeg << " " << ansMinCordPerSeg << " 0" << "\n";
+        cout << "0 0 " << ansMinCordPerSeg << " " << ansMinCordPerSeg << "\n";
     }
 
     return 0;

@@ -21,65 +21,71 @@
 
 using namespace std;
 
-bool f(int n, const vector<ll>& p, ll k) {
-    vector<bool> dp0(n + 1, false);
-    vector<bool> dp1(n + 1, false);
-    dp0[0] = true;
-    dp1[0] = false;
+bool isPossible(int n, const vector<long long>& positions, long long maxDifference) {
+    vector<bool> dpSkipZero(n + 1, false);
+    vector<bool> dpSkipOne(n + 1, false);
+    dpSkipZero[0] = true;
+    dpSkipOne[0] = false;
 
     for(int i = 0; i < n; ++i) {
-        vector<bool> n0(n + 1, false);
-        vector<bool> n1(n + 1, false);
+        vector<bool> newDpZero(n + 1, false);
+        vector<bool> newDpOne(n + 1, false);
 
-        if(dp0[i]) {
-            if(i + 1 < n && abs(p[i + 1] - p[i]) <= k) {
-                n0[i + 2] = true;
+        if (dpSkipZero[i]) {
+            if (i + 1 < n && abs(positions[i + 1] - positions[i]) <= maxDifference) {
+                newDpZero[i + 2] = true;
             }
-            if(k >= 1) {
-                n1[i + 1] = true;
+            if (maxDifference >= 1) {
+                newDpOne[i + 1] = true;
             }
         }
 
-        if(dp1[i]) {
-            if(i + 1 < n && abs(p[i + 1] - p[i]) <= k) {
-                n1[i + 2] = true;
+        if (dpSkipOne[i]) {
+            if (i + 1 < n && abs(positions[i + 1] - positions[i]) <= maxDifference) {
+                newDpOne[i + 2] = true;
             }
         }
 
         for(int j = 0; j <= n; ++j) {
-            if(n0[j]) dp0[j] = true;
-            if(n1[j]) dp1[j] = true;
+            if (newDpZero[j]) dpSkipZero[j] = true;
+            if (newDpOne[j]) dpSkipOne[j] = true;
         }
     }
 
-    return dp0[n] || dp1[n];
+    return dpSkipZero[n] || dpSkipOne[n];
 }
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
 
-    int t;
-    cin >> t;
-    while(t--) {
+    int testCases;
+    cin >> testCases;
+
+    while(testCases--) {
         int n;
         cin >> n;
-        vector<ll> p(n);
-        for(auto &x : p) cin >> x;
+        
+        vector<long long> positions(n);
+        for(auto &position : positions) {
+            cin >> position;
+        }
 
-        ll l = 0, r = (ll)1e18;
-        ll ans = r;
-        while(l <= r) {
-            ll m = l + (r - l) / 2;
-            if(f(n, p, m)) {
-                ans = m;
-                r = m - 1;
+        long long left = 0, right = 1e18;
+        long long result = right;
+
+        while (left <= right) {
+            long long mid = left + (right - left) / 2;
+
+            if (isPossible(n, positions, mid)) {
+                result = mid;
+                right = mid - 1;
             } else {
-                l = m + 1;
+                left = mid + 1;
             }
         }
 
-        cout << ans << "\n";
+        cout << result << "\n";
     }
 
     return 0;
